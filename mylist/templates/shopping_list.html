@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: rgba(0, 0, 0, 0.05);
+            margin: 0;
+        }
+        
+        header {
+            background-color: rgb(133, 192, 45);
+            display: flex;
+            padding-left: 20px;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        button {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+            background-color: blue;
+            border: unset;
+            font-size: 32px;
+            color: white;
+            position: absolute;
+            right: 16px;
+            bottom: 16px;
+        }
+        
+        .list-item {
+            background-color: white;
+            height: 60px;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+            padding-left: 20px;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Einkaufsliste</h1>
+    </header>
+
+
+    {% for row in all_items %}
+    <div class="list-item">
+        <input type="checkbox"> {{ row.name }}
+    </div>
+    {% endfor %}
+
+    <button onclick="addItem()">
+            +
+        </button>
+
+
+    <script>
+        function addItem() {
+            let itemName = prompt('Neues Element hinzufügen');
+            let token = '{{ csrf_token }}';
+            let formData = new FormData();
+            formData.append('itemName', itemName);
+            formData.append('csrfmiddlewaretoken', token);
+            fetch('/mylist/', {
+                method: 'POST',
+                body: formData
+            });
+            window.location.reload();
+        }
+    </script>
+
+</body>
+
+</html>
