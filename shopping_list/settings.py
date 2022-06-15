@@ -28,9 +28,11 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '192.168.29.168',
     '127.0.0.1',
-    'localhost'
+    'localhost',
+    '*.gitpod.io',
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://*.gitpod.io']
 
 # Application definition
 

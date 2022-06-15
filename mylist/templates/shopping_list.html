@@ -58,7 +58,9 @@
 
     {% for row in all_items %}
     <div class="list-item">
+        {% autoescape off %}
         <input type="checkbox"> {{ row.name }}
+        {% endautoescape %}
     </div>
     {% endfor %}
 
@@ -77,8 +79,9 @@
             fetch('/mylist/', {
                 method: 'POST',
                 body: formData
+            }).then( () => {
+                window.location.reload();
             });
-            window.location.reload();
         }
     </script>
 
